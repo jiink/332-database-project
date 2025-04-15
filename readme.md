@@ -81,3 +81,18 @@ Now the PHP file should be able to access the databse, assuming it has the same 
 
 You can test it for yourself in the terminal by opening the MySQL command line, not with `sudo mysql` like before, but with `mysql -u root -p` and then entering the password you came up with.
 
+### Database initialization
+
+It's not enough to just set up the webserver and MySQL. You also need to initialize the database
+so there is some data to work off of.
+
+There's a file called `initialize_db.sql` which will do that. Here's how to use it:
+
+1. Open your terminal.
+1. `cd` to this project's directory.
+1. Enter the MySQL command line. 
+1. Type the command `source initialize_db.sql;`
+
+Then, you should see "Query OK" messages. You can check for yourself if it worked
+by using `SHOW DATABASES;`, `SHOW TABLES;`, etc.
+

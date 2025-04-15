@@ -10,10 +10,11 @@
 
     <?php
     // Database credentials
-    $servername = "localhost";
-    $username = "root";
-    $password = "foo2foo#Bob"; 
-    $dbname = "my_db";
+    require_once './config.php';
+    $servername = $db_config['servername'];
+    $username = $db_config['username'];
+    $password = $db_config['password'];
+    $dbname = $db_config['dbname'];
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -28,8 +29,13 @@
         $searchName = $_GET['name'];
 
         // Prepare the SQL statement to prevent SQL injection
-        $sql = "SELECT id, name, email FROM users WHERE name LIKE ?";
+        $sql = "SELECT CWID, FirstName, LastName, City FROM Student WHERE FirstName LIKE ?";
         $stmt = $conn->prepare($sql);
+
+        // Check if the statement was prepared successfully
+        if ($stmt === false) {
+            die("Error preparing the SQL statement: " . $conn->error);
+        }
 
         // Bind the parameter (add wildcards for partial matching)
         $searchTermWithWildcards = "%" . $searchName . "%";
@@ -44,9 +50,9 @@
         // Display the results
         if ($result->num_rows > 0) {
             echo "<table>";
-            echo "<tr><th>ID</th><th>Name</th><th>Email</th></tr>";
+            echo "<tr><th>CWID</th><th>First Name</th><th>Last Name</th><th>City</th></tr>";
             while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["email"] . "</td></tr>";
+                echo "<tr><td>" . $row["CWID"] . "</td><td>" . $row["FirstName"] . "</td><td>" . $row["LastName"] . "</td><td>" . $row["City"] . "</td></tr>";
             }
             echo "</table>";
         } else {
