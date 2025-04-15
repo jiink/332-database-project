@@ -2,37 +2,15 @@
 
 ## Local setup (Ubuntu)
 
-### Webserver 
-
-Install the stuff you need
-
-`sudo apt update`
-
-`sudo apt install php libapache2-mod-php php-mysql`
-
-`sudo apt install apache2`
-
-`sudo systemctl restart apache2`
-
-Now, with apache running, you can go in your browser to http://localhost (http, NOT https!) and you can see apache's startup page.
-
-apache lets you view stuff in `/var/www/html/`
-
-Let's make it so apache lets you try this web page out.
-
-Instead of copying everything to `/var/www/html/`, we can create a "symbolic link". Here's an example, adjust the command to your needs, don't just copy paste it:
-
-`sudo ln -s ~/database/332-database-project /var/www/html/myproject`
-
-This makes it so if you go to http://localhost/myproject, you'll see the index.html of this repo.
-
-If this is your first time setting this up, chances are that you'll run into an error when you make a query with the webpage. See the next section for how to set up MySQL for this.
+First, set up MySQL. Then, set up the webserver.
 
 ### MySQL
 
 Setting up MySQL was not fun. Here's what to do:
 
 Install MySQL server (and client, I guess)
+
+`sudo apt update`
 
 `sudo apt install mysql-server mysql-client`
 
@@ -51,23 +29,19 @@ Now you should be able to enter the MySQL command line interface with this comma
 
 Here you can practice creating databses and querying them.
 
-But what we want to do here is set up a password for the PHP file to use. Don't just copy paste this command, read it:
+But what we want to do here is set up a username and password for the PHP code to use. Don't just copy paste this command, read it:
 
-`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_new_password';`
-
-This sets the password for the user called "root" to be "your_new_password". 
-
-Replace "your_new_password" with the password of your choice. I think it needs to be >8 chars and have a number and special character.
-
-This is the same password that will be in the php file for it to use to access the database.
-
-So after you enter that password command, you should see this output:
-
-`Query OK, 0 rows affected (0.01 sec)`
-
-If that's the case, then you need to run this:
-
+`CREATE USER 'cs332s3'@'localhost' IDENTIFIED BY 'THE_PASSWORD_GOES_HERE';`
+`GRANT ALL PRIVILEGES ON cs332s3.* TO 'cs332s3'@'localhost';`
 `FLUSH PRIVILEGES;`
+
+This makes a a new user called "cs332s3" and sets its password to "THE_PASSWORD_GOES_HERE".
+
+It then gives it privilges to use the database, then it refreshes things.
+
+Replace "THE_PASSWORD_GOES_HERE" with the password of your choice. I think it needs to be >8 chars and have a number and special character.
+
+This is the same password that will be in `config.php` for it to use to access the database.
 
 Then you can exit the MySQL command line:
 
@@ -77,22 +51,43 @@ Finally, just for good luck, restart the MySQL server:
 
 `sudo systemctl restart mysql`
 
-Now the PHP file should be able to access the databse, assuming it has the same username and password you set with the `ALTER USER` command.
+#### Database initialization
 
-You can test it for yourself in the terminal by opening the MySQL command line, not with `sudo mysql` like before, but with `mysql -u root -p` and then entering the password you came up with.
-
-### Database initialization
-
-It's not enough to just set up the webserver and MySQL. You also need to initialize the database
-so there is some data to work off of.
+You also need to initialize the database so there is some data to work off of.
 
 There's a file called `initialize_db.sql` which will do that. Here's how to use it:
 
 1. Open your terminal.
 1. `cd` to this project's directory.
-1. Enter the MySQL command line. 
+1. Enter the MySQL command line with `mysql -u cs332s3 -p`
 1. Type the command `source initialize_db.sql;`
 
 Then, you should see "Query OK" messages. You can check for yourself if it worked
-by using `SHOW DATABASES;`, `SHOW TABLES;`, etc.
+by using `SHOW DATABASES;`, `USE cs332s3l; SHOW TABLES;`, etc.
+
+### Webserver 
+
+Install the stuff you need
+
+`sudo apt update`
+
+`sudo apt install php libapache2-mod-php php-mysql`
+
+`sudo apt install apache2`
+
+`sudo systemctl restart apache2`
+
+Now, with apache running, you can go in your browser to http://localhost (http, NOT https!) and you can see apache's startup page.
+
+Apache lets you view stuff in `/var/www/html/`, but this project is in a different directory.
+
+Instead of copying everything to `/var/www/html/`, we can create a "symbolic link". Here's an example, adjust the command to your needs, don't just copy paste it:
+
+`sudo ln -s ~/database/332-database-project /var/www/html/myproject`
+
+This makes it so if you go to http://localhost/myproject, you'll see the index.html of this repo.
+
+Now go try it out and make a query. If you run into an error, you can check the logs with this command on Ubuntu:
+
+`sudo tail -n 50 /var/log/apache2/error.log`
 
