@@ -10,10 +10,10 @@
 
     <?php
     // Database credentials
-    $servername = "localhost"; // Your MySQL server address
-    $username = "root";       // Your MySQL username
-    $password = "foo2foo#Bob"; // Your MySQL root password 
-    $dbname = "my_db";        // The name of your database
+    $servername = "localhost";
+    $username = "root";
+    $password = "foo2foo#Bob"; 
+    $dbname = "my_db";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
