@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Database</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <h1>University Database for Professors</h1>
+    <br>
+    <button onclick="location.href='home-prof.html'" class="button">Go Back</button>
+    <br><br>
+    <img src="../prof-icon.png" alt="Professor Icon" style="width:100px;height:auto;">
+    <h2>Find your classes</h2>
+    <h3>Enter your SSN to find the list of classes you teach.</h3>
+    <form action="find-classes.php" method="POST">
+        <label for="ssn">SSN:</label>
+        <input type="text" id="ssn" name="ssn" autocomplete="off">
+        <br><br>
+        <input type="submit" value="Search">
+    </form>
+</body>
+</html>
