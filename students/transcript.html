@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Database</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <h1>University Database for Students</h1>
+    <br>
+    <button onclick="location.href='home-student.html'" class="button">Go Back</button>
+    <br><br>
+    <img src="../student-icon.png" alt="Student Icon" style="width:100px;height:auto;">
+    <h2>Transcript Viewer</h2>
+    <h3>Enter your CWID to view a list of all the courses you took with their grades.</h3>
+    <form action="transcript.php" method="POST">
+        <label for="cwid">CWID:</label>
+        <input type="text" id="cwid" name="cwid" autocomplete="off">
+        <br><br>
+        <input type="submit" value="Search">
+    </form>
+</body>
+</html>

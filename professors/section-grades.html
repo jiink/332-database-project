@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Database</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <h1>University Database for Professors</h1>
+    <br>
+    <button onclick="location.href='home-prof.html'" class="button">Go Back</button>
+    <br><br>
+    <img src="../prof-icon.png" alt="Professor Icon" style="width:100px;height:auto;">
+    <h2>Find your section's grades</h2>
+    <h3>
+        Enter your course number and section number to find the distribution
+        of grades in that section.
+    </h3>
+    <form action="section-grades.php" method="POST">
+        <label for="course-num">Course number:</label>
+        <input type="text" id="course-num" name="course-num" autocomplete="off">
+        <label for="section-num">Section number:</label>
+        <input type="text" id="section-num" name="section-num" autocomplete="off">
+        <br><br>
+        <input type="submit" value="Search">
+    </form>
+</body>
+</html>
