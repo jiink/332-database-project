@@ -198,4 +198,4 @@ INSERT INTO Enrollment (CWID, SectionNumber, Grade) VALUES
 
 -- Sophia Lee (Math Major)
 (489460132, 10210, 'C'),  -- Calculus I
-(489460132, 17350, 'A')   -- Linear Algebra
+(489460132, 17350, 'A');   -- Linear Algebra
