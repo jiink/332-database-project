@@ -18,7 +18,7 @@ CREATE TABLE Student (
     MajorDepNumber INT
 );
 
-INSERT INTO Student (CWID, FirstName, LastName, StreetAddress, City, State, ZipCode, AreaCode, PhoneNumber) VALUES
+INSERT INTO Student (CWID, FirstName, LastName, StreetAddress, City, State, ZipCode, AreaCode, PhoneNumber, MajorDepNumber) VALUES
 (123456789, 'John', 'Doe', '123 Main St', 'Fullerton', 'CA', '92832', '714', '5551212', 100),
 (987654321, 'Jane', 'Smith', '456 Oak Ave', 'Anaheim', 'CA', '92805', '657', '5553434', 200),
 (112233445, 'Alice', 'Johnson', '789 Pine Rd', 'Irvine', 'CA', '92618', '949', '5556789', 300),
@@ -51,7 +51,7 @@ INSERT INTO Professor (SSN, FirstName, LastName, Title, Salary, Sex, StreetAddre
 
 CREATE TABLE ProfessorDegree (
     ProfSSN INT,
-    Degree VARCHAR(30) NOT NULL,
+    Degree VARCHAR(60) NOT NULL,
     PRIMARY KEY (ProfSSN, Degree)
 );
 
