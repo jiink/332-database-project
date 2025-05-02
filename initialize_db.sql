@@ -151,6 +151,8 @@ INSERT INTO Section (CourseNumber, SectionNumber, Classroom, ProfSSN, Seats, Beg
 -- Intro to Programming
 (4010, 10710, 'CS 101', 943865930, 45, 1200, 1315, 'MWF'),
 (4010, 10720, 'CS 102', 943865930, 40, 1500, 1615, 'TR'),
+(4010, 10730, 'CS 102', 943865930, 40, 1630, 1800, 'TR'),
+(4010, 10740, 'CS 102', 943865930, 40, 1630, 1800, 'TR'),
 
 -- Data Structures and Algorithms
 (4020, 85920, 'CS 201', 943865930, 35, 900, 1015, 'MWF');
@@ -180,6 +182,9 @@ INSERT INTO Enrollment (CWID, SectionNumber, Grade) VALUES
 -- Bob Brown (English Major)
 (556677889, 11240, 'B'),  -- Introduction to Literature
 (556677889, 24820, 'A'),  -- International Relations
+(556677889, 10210, 'F'),
+(556677889, 17350, 'F'),
+(556677889, 13450, 'F'),
 
 -- Charlie Davis (CS Major)
 (998877665, 10710, 'A'),  -- Intro to Programming
