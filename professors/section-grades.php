@@ -20,19 +20,53 @@
     if (!$link) {
         die('Could not connect: ' . mysql_error());
     }
-    echo 'Connected successfully<p>';
-
     printf("<h3>Results for Course Num %s and Section Num %s:</h3>\n",
         $_POST["course-num"],
         $_POST["section-num"]);
-
-    // **** THIS IS A PLACEHOLDER QUERY. UPDATE IT AND REMOVE THIS COMMENT ****/
-    printf("THIS IS A PLACEHOLDER QUERY. UPDATE IT AND REMOVE THIS MESSAGE.<br>\n");
-    $query = "SELECT * FROM Student WHERE ZipCode=" . $_POST["course-num"];
-    $result = $link->query($query);
-    $row = $result->fetch_assoc();
-    printf("ZIP: %s<br>\n", $row["ZipCode"]);
-    printf("Name: %s %s<br>\n", $row["FirstName"], $row["LastName"]);
+    $query = "SELECT E.Grade, COUNT(E.CWID) AS NumOfStudents
+        FROM Enrollment E
+        JOIN Section S ON E.SectionNumber = S.SectionNumber
+        WHERE S.CourseNumber = ?
+        AND E.SectionNumber = ?
+        GROUP BY E.Grade
+        ORDER BY E.Grade;";
+    $statement = $link->prepare($query);
+    if (!$statement)
+    {
+        die('Error: ' . $link->error);
+    }
+    $statement->bind_param("ii", $_POST["course-num"], $_POST["section-num"]);
+    $statement->execute();
+    $result = $statement->get_result();
+    echo "<table border='1' cellpadding='5' cellspacing='0'>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>Grade</th>";
+    echo "<th>Number of students</th>";
+    echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
+    $allGrades = [
+        'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'
+    ];
+    $gradesFromDB = [];
+    while ($row = $result->fetch_assoc()) {
+        $gradesFromDB[$row["Grade"]] = $row["NumOfStudents"];
+    }
+    $idx = 0;
+    foreach ($allGrades as $grade) {
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($grade) . "</td>";
+        if (isset($gradesFromDB[$grade])) {
+            echo "<td>" . htmlspecialchars($gradesFromDB[$grade]) . "</td>";
+        } else {
+            echo "<td>0</td>";
+        }
+        echo "</tr>";
+    }
+    echo "</tbody>";
+    echo "</table>";
+    $statement->close();
     $result->free_result();
     $link->close();
     ?>
