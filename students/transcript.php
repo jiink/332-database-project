@@ -23,14 +23,41 @@
     echo 'Connected successfully<p>';
 
     printf("<h3>Results for CWID %s:</h3>\n", $_POST["cwid"]);
-
-    // **** THIS IS A PLACEHOLDER QUERY. UPDATE IT AND REMOVE THIS COMMENT ****/
-    printf("THIS IS A PLACEHOLDER QUERY. UPDATE IT AND REMOVE THIS MESSAGE.<br>\n");
-    $query = "SELECT * FROM Student WHERE ZipCode=" . $_POST["cwid"];
-    $result = $link->query($query);
-    $row = $result->fetch_assoc();
-    printf("ZIP: %s<br>\n", $row["ZipCode"]);
-    printf("Name: %s %s<br>\n", $row["FirstName"], $row["LastName"]);
+    $query = "SELECT S.CourseNumber, C.Title, E.Grade
+        FROM Enrollment E
+        JOIN Section S ON E.SectionNumber = S.SectionNumber
+        JOIN Course C ON S.CourseNumber = C.CourseNumber
+        WHERE E.CWID = ?;";
+    $statement = $link->prepare($query);
+    if (!$statement)
+    {
+        echo "Error: " . $link->error;
+        return;
+    }
+    $statement->bind_param("i", $_POST["cwid"]);
+    $statement->execute();
+    $result = $statement->get_result();
+    echo "<h3>" . $result->num_rows . " classes found.</h3>";
+    echo "<table border='1' cellpadding='5' cellspacing='0'>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>Class title</th>";
+    echo "<th>Course number</th>";
+    echo "<th>Grade</th>";
+    echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
+    while($row = $result->fetch_assoc())
+    {
+        echo "<tr>";
+        echo "<td>" . $row["Title"] . "</td>";
+        echo "<td>" . $row["CourseNumber"] . "</td>";
+        echo "<td>" . $row["Grade"] . "</td>";
+        echo "</tr>";
+    }
+    echo "</tbody>";
+    echo "</table>";
+    $statement->close();
     $result->free_result();
     $link->close();
     ?>
