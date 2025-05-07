@@ -71,10 +71,10 @@ CREATE TABLE Department (
 );
 
 INSERT INTO Department (DepartmentNumber, DepartmentName, ChairSSN, Telephone, OfficeLocation) VALUES
-(100, 'Mathematics', 720394857, '6575274123', 'Idk what goes here' ),
-(200, 'English', 837492615, '6577940374', '' ),
-(300, 'Political Science', 605938174, '6576938493', '' ),
-(400, 'Computer Science', 943865930, '6575274123', '' );
+(100, 'Mathematics', 720394857, '6575274123', 'MH 108' ),
+(200, 'English', 837492615, '6577940374', 'GH 209' ),
+(300, 'Political Science', 605938174, '6576938493', 'UH 101' ),
+(400, 'Computer Science', 943865930, '6575274123', 'CS 106' );
 
 CREATE TABLE Course (
     CourseNumber INT PRIMARY KEY,
